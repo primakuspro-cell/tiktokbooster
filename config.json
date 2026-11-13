@@ -1,0 +1,25 @@
+﻿{
+  "port": 3000,
+
+  "panel": {
+    "api_url": "https://ton-panel-smm.com/api/v2",
+    "api_key": "COLLE_TA_CLE_ICI",
+    "service_tiktok_views": "1000"
+  },
+
+  "limites": {
+    "min": 100,
+    "max": 10000,
+    "cooldown_minutes": 1440,
+    "max_par_jour_par_ip": 1
+  },
+
+  "gate": {
+    "actif": false,
+    "url": "",
+    "titre": "Une derniere etape",
+    "message": "Ouvre ce lien, reste 15 secondes, puis reviens ici pour debloquer ton boost."
+  },
+
+  "mode_demo": true
+}

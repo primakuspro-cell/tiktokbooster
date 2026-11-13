@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Booster de vues TikTok</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 16px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(circle at 12% 8%, #ffe3f1 0%, transparent 45%),
+      radial-gradient(circle at 88% 92%, #ffd9ec 0%, transparent 45%),
+      #fff7fb;
+    color: #2b0a1a;
+  }
+
+  .carte {
+    width: 100%;
+    max-width: 520px;
+    background: #ffffff;
+    border: 2px solid #ffd6e9;
+    border-radius: 22px;
+    padding: 34px 30px 30px;
+    box-shadow: 0 24px 60px -30px rgba(255, 46, 136, 0.45);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .carte::before {
+    content: "";
+    position: absolute;
+    top: -70px; right: -70px;
+    width: 190px; height: 190px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffe9f3 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .titre {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+    position: relative;
+  }
+
+  .titre h1 {
+    font-size: 27px;
+    letter-spacing: -0.8px;
+    color: #ff2e88;
+  }
+
+  .titre .marque {
+    font-size: 12px;
+    color: #ff9ec4;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .sous {
+    font-size: 13.5px;
+    color: #8a6478;
+    margin-bottom: 26px;
+    line-height: 1.5;
+    position: relative;
+  }
+
+  label {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #a3758c;
+    margin-bottom: 8px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #2b0a1a;
+    background: #fff8fc;
+    border: 2px solid #ffe0ee;
+    border-radius: 13px;
+    outline: none;
+    transition: border-color .15s, background .15s;
+  }
+
+  input[type="text"]:focus {
+    border-color: #ff9ec4;
+    background: #fff;
+  }
+
+  input[type="text"]::placeholder { color: #d4a8c0; }
+
+  .bloc { margin-bottom: 22px; }
+
+  .compteur {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .compteur .valeur {
+    font-size: 34px;
+    font-weight: 800;
+    color: #ff2e88;
+    letter-spacing: -1.5px;
+    line-height: 1;
+  }
+
+  .compteur .unite {
+    font-size: 14px;
+    color: #a3758c;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+
+  .compteur .info {
+    font-size: 11px;
+    color: #c493ac;
+    text-align: right;
+    line-height: 1.4;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #ff2e88 0%, #ff9ec4 100%);
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #fff;
+    border: 4px solid #ff2e88;
+    box-shadow: 0 3px 10px rgba(255, 46, 136, 0.35);
+    cursor: pointer;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    border: 4px solid #ff2e88;
+    cursor: pointer;
+  }
+
+  .paliers {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 10.5px;
+    color: #c493ac;
+  }
+
+  .paliers span { cursor: pointer; }
+  .paliers span:hover { color: #ff2e88; }
+
+  button {
+    width: 100%;
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: 0.3px;
+    color: #fff;
+    background: linear-gradient(135deg, #ff2e88 0%, #ff6aa9 100%);
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: transform .12s, box-shadow .12s, opacity .12s;
+    box-shadow: 0 12px 26px -12px rgba(255, 46, 136, 0.7);
+  }
+
+  button:hover:not(:disabled) { transform: translateY(-1px); }
+  button:active:not(:disabled) { transform: translateY(1px); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+
+  .note {
+    margin-top: 16px;
+    font-size: 11px;
+    color: #c493ac;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .message {
+    margin-top: 18px;
+    padding: 13px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    display: none;
+  }
+
+  .message.erreur { display: block; background: #fff0f5; border: 1.5px solid #ffc2d9; color: #d81b60; }
+  .message.succes { display: block; background: #f0fff6; border: 1.5px solid #b8ebcd; color: #0f7b45; }
+
+  .suivi { display: none; margin-top: 22px; }
+  .suivi.actif { display: block; }
+
+  .suivi .entete {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+
+  .suivi .entete .gauche {
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #a3758c;
+  }
+
+  .suivi .entete .droite {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ff2e88;
+  }
+
+  .barre {
+    height: 10px;
+    border-radius: 20px;
+    background: #ffe9f3;
+    overflow: hidden;
+  }
+
+  .barre .remplissage {
+    height: 100%;
+    width: 0%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #ff2e88, #ff9ec4);
+    transition: width .5s ease;
+  }
+
+  .suivi .chiffres {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 9px;
+    font-size: 11.5px;
+    color: #8a6478;
+  }
+
+  .badge-demo {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: #b06a8c;
+    background: #fff0f7;
+    border: 1.5px solid #ffd6e9;
+    padding: 5px 10px;
+    border-radius: 20px;
+  }
+
+  .voile {
+    position: fixed;
+    inset: 0;
+    background: rgba(43, 10, 26, 0.45);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 50;
+  }
+
+  .voile.actif { display: flex; }
+
+  .fenetre {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border: 2px solid #ffd6e9;
+    border-radius: 20px;
+    padding: 28px 26px 24px;
+    box-shadow: 0 30px 70px -30px rgba(255, 46, 136, 0.6);
+    text-align: center;
+  }
+
+  .fenetre h2 {
+    font-size: 19px;
+    color: #ff2e88;
+    margin-bottom: 10px;
+    letter-spacing: -0.4px;
+  }
+
+  .fenetre p {
+    font-size: 13px;
+    color: #8a6478;
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+
+  .fenetre .lien-gate {
+    display: block;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #2b0a1a 0%, #5a2439 100%);
+    border-radius: 13px;
+    margin-bottom: 12px;
+  }
+
+  .fenetre .annuler {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 11.5px;
+    color: #c493ac;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<div class="carte">
+  <div class="badge-demo" id="badge" style="display:none">demo</div>
+
+  <div class="titre">
+    <h1>Booster de vues</h1>
+    <span class="marque">TikTok</span>
+  </div>
+
+  <p class="sous">
+    Colle le lien de ta video, choisis le nombre de vues, lance. Le compteur monte en direct.
+  </p>
+
+  <div class="bloc">
+    <label for="lien">Lien de la video</label>
+    <input type="text" id="lien" placeholder="https://www.tiktok.com/@toncompte/video/..." autocomplete="off" spellcheck="false">
+  </div>
+
+  <div class="bloc">
+    <label>Nombre de vues</label>
+    <div class="compteur">
+      <div>
+        <span class="valeur" id="valeur">10000</span><span class="unite">vues</span>
+      </div>
+      <div class="info">
+        minimum <span id="min">100</span><br>
+        maximum <span id="max">10000</span>
+      </div>
+    </div>
+    <input type="range" id="curseur" min="100" max="10000" step="100" value="10000">
+    <div class="paliers">
+      <span data-val="1000">1 000</span>
+      <span data-val="2500">2 500</span>
+      <span data-val="5000">5 000</span>
+      <span data-val="10000">10 000</span>
+    </div>
+  </div>
+
+  <button id="envoyer">Lancer le boost</button>
+
+  <div class="message" id="message"></div>
+
+  <div class="suivi" id="suivi">
+    <div class="entete">
+      <span class="gauche">Progression</span>
+      <span class="droite" id="statut">En cours</span>
+    </div>
+    <div class="barre"><div class="remplissage" id="remplissage"></div></div>
+    <div class="chiffres">
+      <span id="livre">0 vue livree</span>
+      <span id="reste">0 restante</span>
+    </div>
+  </div>
+
+  <p class="note">
+    Une commande par jour et par appareil. Les vues arrivent progressivement,
+    il faut parfois quelques minutes avant que le compteur TikTok les affiche.
+  </p>
+</div>
+
+<div class="voile" id="voile">
+  <div class="fenetre">
+    <h2 id="gate-titre">Une derniere etape</h2>
+    <p id="gate-message">Ouvre ce lien puis reviens ici.</p>
+    <a class="lien-gate" id="gate-lien" href="#" target="_blank" rel="noopener">Ouvrir le lien</a>
+    <button id="gate-valider">J'ai termine, debloquer</button>
+    <span class="annuler" id="gate-annuler">Annuler</span>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var curseur = document.getElementById("curseur");
+  var valeur = document.getElementById("valeur");
+  var lien = document.getElementById("lien");
+  var envoyer = document.getElementById("envoyer");
+  var message = document.getElementById("message");
+  var suivi = document.getElementById("suivi");
+  var remplissage = document.getElementById("remplissage");
+  var statut = document.getElementById("statut");
+  var livre = document.getElementById("livre");
+  var reste = document.getElementById("reste");
+  var badge = document.getElementById("badge");
+
+  var min = 100;
+  var max = 10000;
+  var minuterie = null;
+  var gate = { actif: false };
+  var debloque = false;
+
+  var voile = document.getElementById("voile");
+  var gateLien = document.getElementById("gate-lien");
+  var gateValider = document.getElementById("gate-valider");
+  var gateAnnuler = document.getElementById("gate-annuler");
+
+  function formater(n) {
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+
+  function afficherValeur() {
+    valeur.textContent = formater(parseInt(curseur.value, 10));
+  }
+
+  function afficher(texte, type) {
+    message.textContent = texte;
+    message.className = "message " + (type || "");
+  }
+
+  function effacer() {
+    message.textContent = "";
+    message.className = "message";
+  }
+
+  curseur.addEventListener("input", afficherValeur);
+
+  Array.prototype.forEach.call(document.querySelectorAll(".paliers span"), function (bouton) {
+    bouton.addEventListener("click", function () {
+      curseur.value = bouton.getAttribute("data-val");
+      afficherValeur();
+    });
+  });
+
+  // --- configuration venue du serveur ---
+  fetch("/api/config")
+    .then(function (r) { return r.json(); })
+    .then(function (c) {
+      min = c.min;
+      max = c.max;
+
+      curseur.min = c.min;
+      curseur.max = c.max;
+
+      document.getElementById("min").textContent = formater(c.min);
+      document.getElementById("max").textContent = formater(c.max);
+
+      if (parseInt(curseur.value, 10) > c.max) {
+        curseur.value = c.max;
+      }
+
+      if (c.demo) {
+        badge.style.display = "block";
+      }
+
+      if (c.gate && c.gate.actif && c.gate.url) {
+        gate.actif = true;
+        gateLien.href = c.gate.url;
+
+        if (c.gate.titre) {
+          document.getElementById("gate-titre").textContent = c.gate.titre;
+        }
+        if (c.gate.message) {
+          document.getElementById("gate-message").textContent = c.gate.message;
+        }
+      }
+
+      afficherValeur();
+    })
+    .catch(function () { afficherValeur(); });
+
+  afficherValeur();
+
+  // --- suivi ---
+  function arreterSuivi() {
+    if (minuterie) {
+      clearInterval(minuterie);
+      minuterie = null;
+    }
+  }
+
+  // --- porte publicitaire : le visiteur debloque, toi tu encaisses ---
+  gateValider.addEventListener("click", function () {
+    debloque = true;
+    voile.className = "voile";
+    envoyer.click();
+  });
+
+  gateAnnuler.addEventListener("click", function () {
+    voile.className = "voile";
+  });
+
+  function suivre(id) {
+    arreterSuivi();
+
+    function rafraichir() {
+      fetch("/api/order/" + id)
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (!d.ok) {
+            arreterSuivi();
+            return;
+          }
+
+          remplissage.style.width = d.progression + "%";
+          statut.textContent = d.statut;
+          livre.textContent = formater(d.livre) + " vue" + (d.livre > 1 ? "s" : "") + " livree" + (d.livre > 1 ? "s" : "");
+          reste.textContent = formater(d.reste) + " restante" + (d.reste > 1 ? "s" : "");
+
+          if (d.statut === "Termine" || d.statut === "Completed" || d.progression >= 100) {
+            arreterSuivi();
+            statut.textContent = "Termine";
+            remplissage.style.width = "100%";
+            afficher("Boost termine. Va verifier le compteur sur TikTok.", "succes");
+          }
+        })
+        .catch(function () {});
+    }
+
+    suivi.className = "suivi actif";
+    rafraichir();
+    minuterie = setInterval(rafraichir, 3000);
+  }
+
+  // --- envoi ---
+  envoyer.addEventListener("click", function () {
+    effacer();
+
+    var adresse = lien.value.trim();
+    var quantite = parseInt(curseur.value, 10);
+
+    if (!adresse) {
+      afficher("Colle le lien de ta video TikTok.", "erreur");
+      lien.focus();
+      return;
+    }
+
+    if (adresse.toLowerCase().indexOf("tiktok.com") === -1) {
+      afficher("Ce lien ne ressemble pas a un lien TikTok.", "erreur");
+      lien.focus();
+      return;
+    }
+
+    if (gate.actif && !debloque) {
+      voile.className = "voile actif";
+      return;
+    }
+
+    envoyer.disabled = true;
+    envoyer.textContent = "Envoi...";
+
+    fetch("/api/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lien: adresse, quantite: quantite })
+    })
+      .then(function (r) {
+        return r.json().then(function (d) {
+          return { code: r.status, donnees: d };
+        });
+      })
+      .then(function (res) {
+        if (!res.donnees.ok) {
+          afficher(res.donnees.message || "La commande a echoue.", "erreur");
+          return;
+        }
+
+        afficher("Commande acceptee : " + formater(res.donnees.quantite) + " vues en preparation.", "succes");
+        suivre(res.donnees.id);
+      })
+      .catch(function () {
+        afficher("Le serveur ne repond pas. Verifie que Lancer.bat tourne.", "erreur");
+      })
+      .finally(function () {
+        envoyer.disabled = false;
+        envoyer.textContent = "Lancer le boost";
+      });
+  });
+})();
+</script>
+
+</body>
+</html>
